@@ -1,0 +1,48 @@
+.List-ListItem {
+  display: flex;
+  margin: 10px;
+}
+
+.List-ListCategory {
+  margin: 10px;
+}
+
+.List-Input-Text {
+  border: 1px solid black;
+  width: calc(100% - 24px - 10px);
+  margin: 10px;
+  font-size: 18pt;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.List-ListItem-Checkbox {
+  width: 10%;
+}
+
+.List-ListItem-Checkbox > input {
+  margin: 0px 10px;
+}
+
+.List-ListItem-Label {
+  width: 80%;
+}
+
+.List-ListItem-LabelCrossed {
+  text-decoration: line-through;
+  color: #808B96;
+}
+
+.List-ListItem-Move {
+  width: 10%;
+}
+
+.List-DeleteChecked {
+  margin: 10px;
+  border: 1px solid red;
+  font-size: 12pt;
+  color: red;
+  border-radius: 3px;
+  background: white;
+  width: calc(100% - 20px);
+}
