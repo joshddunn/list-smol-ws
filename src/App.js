@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Checkbox, Button, Input } from 'semantic-ui-react';
 import './App.css';
 
 class App extends Component {
@@ -13,7 +14,6 @@ class App extends Component {
       <div className="List">
         {this.itemInput()}
         {this.listItems()}
-        <button className="List-DeleteChecked" onClick={this.deleteChecked.bind(this)}>Delete Checked</button>
       </div>
     );
   }
@@ -28,16 +28,27 @@ class App extends Component {
 
   itemInput() {
     return (
-      <div className="List-Input">
-        <form onSubmit={this.addItem.bind(this)}>
-          <input
-            className="List-Input-Text"
-            type="text"
-            placeholder="Add items"
-            value={this.state.input}
-            onChange={e => this.setState({input: e.target.value})}
-          />
-        </form>
+      <div className="List-header">
+        <div className="List-header-input">
+          <form onSubmit={this.addItem.bind(this)}>
+            <Input
+              className="List-input"
+              placeholder="Add items"
+              value={this.state.input}
+              onChange={e => this.setState({input: e.target.value})}
+            />
+          </form>
+        </div>
+        <div className="List-header-button">
+          <Button
+            className="List-button"
+            onClick={this.deleteChecked.bind(this)}
+            basic
+            color='red'
+          >
+            Clean
+          </Button>
+        </div>
       </div>
     );
   }
@@ -68,25 +79,20 @@ class App extends Component {
 
   listItem(item) {
     return (
-      <div className="List-ListItem" key={`item-${item.name}`}>
-        <div className="List-ListItem-Checkbox">
-          <input
-            type="checkbox"
-            key={item.name}
-            checked={item.checked}
-            onChange={e => this.updateChecked(item.name, e)}
-          />
-        </div>
-        <div className="List-ListItem-Label">
-          {item.checked ? <span className="List-ListItem-LabelCrossed">{item.name}</span> : item.name}
-        </div>
+      <div className="List-item" key={`item-${item.name}`}>
+        <Checkbox
+          key={item.name}
+          checked={item.checked}
+          onChange={e => this.updateChecked(item.name, e)}
+          label={item.checked ? <label className="List-crossed">{item.name}</label> : item.name}
+        />
       </div>
     );
   }
 
   listCategory(name) {
     return (
-      <div className="List-ListCategory" key={`category-${name}`}>
+      <div key={`category-${name}`}>
         {name}
       </div>
     );
@@ -105,7 +111,7 @@ class App extends Component {
   }
 
   deleteChecked() {
-    if (window.confirm("Are you sure?")) {
+    if (window.confirm("Cleaning your list will remove all checked items. This is not reversible. Are you sure?")) {
       const filteredItems = this.state.items.filter(item => !item.checked);
       this.setState({items: filteredItems});
       window.localStorage.setItem("items", JSON.stringify(filteredItems));
