@@ -7,8 +7,15 @@
   color: #808B96 !important;
 }
 
+.List-checkbox {
+  width: 100%;
+}
+
 .List-item {
-  margin: 10px;
+  padding: 5px 10px;
+  margin: 5px auto;
+  background: #eee;
+  border-radius: 5px;
 }
 
 .List-input {
@@ -23,6 +30,7 @@
 .List-header {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .List-header-input {

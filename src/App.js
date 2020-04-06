@@ -81,6 +81,7 @@ class App extends Component {
     return (
       <div className="List-item" key={`item-${item.name}`}>
         <Checkbox
+          className="List-checkbox"
           key={item.name}
           checked={item.checked}
           onChange={e => this.updateChecked(item.name, e)}
