@@ -96,6 +96,11 @@
   padding: 13.5px 14px !important;
 }
 
+.List-header-container {
+  position: absolute;
+  width: 100%;
+}
+
 .List-header {
   display: flex;
   width: calc(100% - 20px);
@@ -136,9 +141,10 @@
 }
 
 .List-items {
+  margin-top: 105px;
   overflow-x: hidden;
   overflow-y: scroll;
-  height: calc(100vh - 110px);
+  height: calc(100vh - 125px);
 }
 
 .List-items::-webkit-scrollbar {

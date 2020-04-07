@@ -83,7 +83,7 @@ class App extends Component {
 
   header() {
     return (
-      <div>
+      <div className="List-header-container">
         <div className="List-header">
           <div className="List-header-input-left">
             <Menu compact className="List-header-input-menu">
