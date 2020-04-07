@@ -193,7 +193,7 @@ class App extends Component {
 
   updateChecked(name, evt) {
     const items = this.state.items;
-    const index = items.findIndex(item => item.name === name);
+    const index = items.findIndex(item => item.name === name && item.category === this.state.category);
     const item = items[index];
 
     item.checked = !item.checked;
