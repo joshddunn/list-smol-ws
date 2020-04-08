@@ -10,6 +10,7 @@ import {
 import NewListModal from './NewListModal';
 import CleanListModal from './CleanListModal';
 import DeleteListModal from './DeleteListModal';
+import SettingsModal from './SettingsModal';
 
 import { colorOptions, defaultColorOption } from './colorOptions';
 
@@ -23,6 +24,8 @@ class App extends Component {
     const categories = JSON.parse(window.localStorage.getItem("categories") || "[\"Default\"]");
     const color = window.localStorage.getItem("color") || defaultColorOption;
     const category = window.localStorage.getItem("category") || "Default";
+    const sortAlphabetically = window.localStorage.getItem("sortAlphabetically") === "true" ? true : false;
+    const buryCheckedItems = window.localStorage.getItem("buryCheckedItems") === "true" ? true : false;
 
     this.state = {
       input: "",
@@ -31,6 +34,9 @@ class App extends Component {
       cleanOpen: false,
       deleteOpen: false,
       newOpen: false,
+      settingsOpen: false,
+      sortAlphabetically,
+      buryCheckedItems,
       items,
       categories,
       color,
@@ -45,6 +51,7 @@ class App extends Component {
         <div className="List-items">
           {this.listItems()}
         </div>
+        {this.footer()}
         <CleanListModal
           open={this.state.cleanOpen}
           onClickCancel={e => this.setState({ cleanOpen: false })}
@@ -62,6 +69,14 @@ class App extends Component {
           onChange={e => this.setState({ name: e.target.value })}
           onClickCancel={e => this.setState({ newOpen: false, name: "", error: "" })}
           onClickConfirm={this.newList.bind(this)}
+        />
+        <SettingsModal
+          open={this.state.settingsOpen}
+          onClickClose={e => this.setState({ settingsOpen: false })}
+          sortAlphabeticallyValue={this.state.sortAlphabetically}
+          onChangeSortAlphabetically={this.setSortAlphabetically.bind(this)}
+          buryCheckedItemsValue={this.state.buryCheckedItems}
+          onChangeBuryCheckedItems={this.setBuryCheckedItems.bind(this)}
         />
       </div>
     );
@@ -118,6 +133,13 @@ class App extends Component {
                     disabled={this.state.categories.length === 1}
                     onClick={e => this.setState({ deleteOpen: true })}
                   />
+                  <Dropdown.Divider />
+                  <Dropdown.Item
+                    text="Settings"
+                    icon="setting"
+                    value="setting"
+                    onClick={e => this.setState({ settingsOpen: true })}
+                  />
                 </Dropdown.Menu>
               </Dropdown>
             </Button.Group>
@@ -135,6 +157,21 @@ class App extends Component {
         </div>
       </div>
     );
+  }
+
+  footer() {
+    const count = this.itemsRemaining();
+    const items = count === 1 ? "item" : "items";
+    const text = count === 0 ? "All done" : `${count} ${items} remaining`;
+    return (
+      <div className="List-footer-container">
+        {text}
+      </div>
+    );
+  }
+
+  itemsRemaining = () => {
+    return this.state.items.filter(item => item.category === this.state.category && !item.checked).length;
   }
 
   // label={<Dropdown value={this.state.color} options={colorOptions} onChange={this.changeColor.bind(this)} />}
@@ -171,7 +208,19 @@ class App extends Component {
     const mappedItems = [];
     const groupedItems = this.groupedItems();
     Object.keys(groupedItems).forEach((key, index) => {
-      mappedItems.push(groupedItems[key].map(item => this.listItem(item)));
+      const grouped = groupedItems[key].sort((a, b) => {
+        let checked = 0;
+        if (this.state.buryCheckedItems) {
+          if (a.checked && !b.checked) checked = 1;
+          if (!a.checked && b.checked) checked = -1;
+        }
+
+        let sort = 0;
+        if (this.state.sortAlphabetically) sort = a.name.localeCompare(b.name);
+
+        return checked || sort;
+      });
+      mappedItems.push(grouped.map(item => this.listItem(item)));
     });
     return mappedItems;
   }
@@ -240,6 +289,18 @@ class App extends Component {
       window.localStorage.setItem("categories", JSON.stringify(newCategories));
       this.setState({ name: "", error: "" });
     }
+  }
+
+  setSortAlphabetically() {
+    const check = this.state.sortAlphabetically;
+    this.setState({ sortAlphabetically: !check });
+    window.localStorage.setItem("sortAlphabetically", !check);
+  }
+
+  setBuryCheckedItems() {
+    const check = this.state.buryCheckedItems;
+    this.setState({ buryCheckedItems: !check });
+    window.localStorage.setItem("buryCheckedItems", !check);
   }
 }
 

@@ -101,6 +101,14 @@
   width: 100%;
 }
 
+.List-footer-container {
+  position: absolute;
+  width: calc(100% - 20px);
+  bottom: 0;
+  margin: 10px;
+  text-align: right;
+}
+
 .List-header {
   display: flex;
   width: calc(100% - 20px);
@@ -144,7 +152,7 @@
   margin-top: 105px;
   overflow-x: hidden;
   overflow-y: scroll;
-  height: calc(100vh - 125px);
+  height: calc(100vh - 155px);
 }
 
 .List-items::-webkit-scrollbar {
@@ -167,4 +175,21 @@
 .List-Modal-error {
   margin-top: 10px;
   color: #ff695e;
+}
+
+.ui.toggle.checkbox input:focus:checked~label,
+.ui.toggle.checkbox input:checked~label{
+  color: white !important;
+}
+
+.ui.toggle.checkbox > label:before {
+  background: rgba(0,0,0,.75) !important;
+}
+
+.List-settings-label {
+  margin: 5px auto;
+}
+
+.List-settings-label > label {
+  color: white !important;
 }
