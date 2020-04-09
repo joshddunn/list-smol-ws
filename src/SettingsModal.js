@@ -27,12 +27,15 @@ class SettingsModal extends Component {
           <Checkbox
             className="List-settings-label"
             toggle
-            label="Bury checked items"
+            label="Put checked items at bottom of list"
             checked={this.props.buryCheckedItemsValue}
             onChange={this.props.onChangeBuryCheckedItems}
           />
         </Modal.Content>
         <Modal.Actions>
+          <Button color='standard' inverted onClick={e => window.location.reload()}>
+            <Icon name='refresh' /> Update
+          </Button>
           <Button color='green' inverted onClick={this.props.onClickClose}>
             <Icon name='checkmark' /> Close
           </Button>
