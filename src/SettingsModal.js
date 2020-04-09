@@ -33,9 +33,6 @@ class SettingsModal extends Component {
           />
         </Modal.Content>
         <Modal.Actions>
-          <Button color='standard' inverted onClick={e => window.location.reload()}>
-            <Icon name='refresh' /> Update
-          </Button>
           <Button color='green' inverted onClick={this.props.onClickClose}>
             <Icon name='checkmark' /> Close
           </Button>
