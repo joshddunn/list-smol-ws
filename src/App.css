@@ -7,6 +7,10 @@
   color: #808B96 !important;
 }
 
+.List-dropdown > .menu {
+  max-height: 14em !important;
+}
+
 .List-checkbox {
   width: 100%;
   font-size: 16px !important;

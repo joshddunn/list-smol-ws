@@ -103,6 +103,7 @@ class App extends Component {
           <div className="List-header-input-left">
             <Menu compact className="List-header-input-menu">
               <Dropdown
+                className="List-dropdown"
                 selection
                 basic
                 value={this.state.category}
